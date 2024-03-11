@@ -1,15 +1,16 @@
 const express = require('express');
+const fs = require('fs');
 const app = express();
+const morgan = require('morgan');
+const toursRouter = require('./routes/tourRoutes');
+const usersRouter = require('./routes/userRoutes');
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.use(morgan('dev'));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Hello World' , app: "Natours app"});
-});
+app.use(express.static(`${__dirname}/public`));
 
-app.post('/', (req, res) => {
-  res.status(200).send('You can post to this endpoint' );
-});
+app.use('/api/v1/tours', toursRouter);
+app.use('/api/v1/users', usersRouter);
+
+module.exports = app;
