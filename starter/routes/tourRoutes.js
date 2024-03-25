@@ -1,7 +1,6 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
-const { router } = require('express/lib/application');
-
+const authController = require('../controllers/authController');
 const toursRouter = express.Router();
 
 // toursRouter.param('id', tourController.checkID);
@@ -15,13 +14,17 @@ toursRouter.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 toursRouter
   .route('/')
-  .get(tourController.getAllTours)
+  .get(authController.protect, tourController.getAllTours)
   .post(tourController.createTour);
 
 toursRouter
   .route('/:id')
   .get(tourController.getTour)
   .patch(tourController.updateTour)
-  .delete(tourController.deleteTour);
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.deleteTour,
+  );
 
 module.exports = toursRouter;
