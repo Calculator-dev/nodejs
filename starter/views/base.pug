@@ -1,0 +1,17 @@
+doctype html
+
+html
+    head
+        title Natours | #{tour}
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        header.header
+            nav.nav.nav--tours
+                a.nav__el(href='#') All Tours
+            .header__logo-box
+                img.header__logo(src='/img/monica.jpg', alt='Natours logo')
+            nav.nav.nav--user
+                a.nav__el(href='#') My Bookings
+                a.nav__el(href='#')
+                    img.nav__user-img(src='/img/monica.jpg', alt='User photo')
+
